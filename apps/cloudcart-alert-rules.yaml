@@ -1,0 +1,55 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: cloudcart-alert-rules
+  namespace: monitoring
+  labels:
+    release: cloudcart-monitoring
+spec:
+  groups:
+    - name: cloudcart.application.rules
+      rules:
+        - alert: CloudCartServiceDown
+          expr: up{namespace="staging",job=~"cloudcart-(customer|order|product)-.*"} == 0
+          for: 2m
+          labels:
+            severity: critical
+            team: cloudcart
+          annotations:
+            summary: "CloudCart microservice is unavailable"
+            description: "Service {{ $labels.job }} pod {{ $labels.pod }} is down."
+
+        - alert: CloudCartHigh5xxErrors
+          expr: |
+            (
+              sum by (exported_service) (
+                rate(http_requests_total{namespace="staging",status_code=~"5.."}[5m])
+              )
+              /
+              clamp_min(
+                sum by (exported_service) (
+                  rate(http_requests_total{namespace="staging"}[5m])
+                ),
+                0.000001
+              )
+            ) > 0.05
+          for: 5m
+          labels:
+            severity: warning
+            team: cloudcart
+          annotations:
+            summary: "High HTTP 5xx error rate"
+            description: "{{ $labels.exported_service }} has more than 5% HTTP 5xx errors."
+
+        - alert: CloudCartPodRestarts
+          expr: |
+            increase(
+              kube_pod_container_status_restarts_total{namespace="staging"}[10m]
+            ) >= 3
+          for: 1m
+          labels:
+            severity: warning
+            team: cloudcart
+          annotations:
+            summary: "CloudCart pod restarting repeatedly"
+            description: "Pod {{ $labels.pod }} has restarted at least 3 times in 10 minutes."
