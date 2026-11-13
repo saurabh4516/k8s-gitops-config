@@ -1,0 +1,59 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: cloudcart-customer
+  namespace: staging
+  labels:
+    release: cloudcart-monitoring
+spec:
+  namespaceSelector:
+    matchNames:
+      - staging
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: cloudcart-customer
+      app.kubernetes.io/name: customer-service
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 30s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: cloudcart-order
+  namespace: staging
+  labels:
+    release: cloudcart-monitoring
+spec:
+  namespaceSelector:
+    matchNames:
+      - staging
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: cloudcart-order
+      app.kubernetes.io/name: order-service
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 30s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: cloudcart-product
+  namespace: staging
+  labels:
+    release: cloudcart-monitoring
+spec:
+  namespaceSelector:
+    matchNames:
+      - staging
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: cloudcart-product
+      app.kubernetes.io/name: product-service
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 30s
