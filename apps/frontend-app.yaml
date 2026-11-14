@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cloudcart-frontend
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/saurabh4516/k8s-gitops-platform.git
+    targetRevision: main
+    path: helm/frontend
+    helm:
+      releaseName: cloudcart-frontend
+      valueFiles:
+        - values-dev.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: staging
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
