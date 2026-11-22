@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/saurabh4516/k8s-gitops-platform.git
+    repoURL: https://github.com/saurabh4516/k8s-gitops-config.git
     targetRevision: main
-    path: helm/frontend
+    path: charts/frontend
     helm:
       releaseName: cloudcart-frontend-prod
       valueFiles:
