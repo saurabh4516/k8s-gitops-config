@@ -6,7 +6,7 @@ metadata:
   labels:
     grafana_dashboard: "1"
 data:
-  dashboard.json: |
+  cloudcart-cluster-overview.json: |
     {
       "id": null,
       "uid": "cloudcart-cluster",
@@ -275,7 +275,7 @@ metadata:
   labels:
     grafana_dashboard: "1"
 data:
-  dashboard.json: |
+  cloudcart-microservices-health.json: |
     {
       "id": null,
       "uid": "cloudcart-services",
