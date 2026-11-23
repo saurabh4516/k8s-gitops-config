@@ -2,7 +2,7 @@ replicaCount: 2
 
 image:
   repository: cloudcart-frontend
-  pullPolicy: IfNotPresent
+  pullPolicy: Never
   tag: "v1"
 
 imagePullSecrets: []
