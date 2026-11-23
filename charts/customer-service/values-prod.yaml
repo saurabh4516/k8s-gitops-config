@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: cloudcart-customer-service
-  pullPolicy: Never
+  pullPolicy: IfNotPresent
   tag: "latest"
 
 service:
