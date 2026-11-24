@@ -1,7 +1,7 @@
 replicaCount: 2
 
 image:
-  repository: cloudcart-frontend
+  repository: docker.io/library/cloudcart-frontend
   pullPolicy: Never
   tag: "v1"
 
