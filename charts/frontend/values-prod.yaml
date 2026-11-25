@@ -1,11 +1,12 @@
 replicaCount: 2
 
 image:
-  repository: docker.io/library/cloudcart-frontend
-  pullPolicy: Never
+  repository: 783722568260.dkr.ecr.ap-south-1.amazonaws.com/cloudcart-frontend
+  pullPolicy: IfNotPresent
   tag: "v1"
 
-imagePullSecrets: []
+imagePullSecrets:
+  - name: ecr-registry
 
 service:
   type: ClusterIP
